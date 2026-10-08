@@ -2,26 +2,36 @@
 
 ## Integrantes
 
-Guilherme Barca - RM568517
-Juliana Marques - RM566795
-Lucas Gomes Kosio - RM566828
+- Guilherme Barca - RM568517
+- Juliana Marques - RM566795
+- Lucas Gomes Kosio - RM566828
 
+## Domínio
 
-## Domínio escolhido
-**Loja de Perfumes** — O cliente faz pedidos de perfumes em geral, que pertencem a uma categoria e tem controle de estoque.
+Loja de perfumes: o cliente faz pedidos de perfumes, que pertencem a uma categoria e têm controle de estoque.
+Entidades: Cliente, Pedido, ItemPedido, Perfume, Categoria e Estoque (MER em `/docs`).
 
-## Entidades modeladas:
-1. **Cliente**
-2. **Pedido**
-3. **ItemPedido** 
-4. **Perfume**
-5. **Categoria**
-6. **Estoque**
+## SGBD
 
-## Resumo dos relacionamentos
+MySQL com Framework 9.
 
-Cliente - Pedido | 1:N | Pedido obrigatório p/ Cliente; Cliente opcional p/ Pedido |
-Pedido - ItemPedido | 1:N | Obrigatório nos dois lados |
-Perfume - ItemPedido | 1:N | ItemPedido obrigatorio p/ Perfume; Perfume opcional p/ ItemPedido |
-Categoria - Perfume | 1:N | Perfume obrigatório p/ Categoria; Categoria opcional p/ Perfume |
-Perfume - Estoque | 1:1 | Obrigatório nos dois lados |
+## Como rodar
+
+# 1. Subir o MySQL (se o container já existir: docker start TDSPB)
+docker run --name TDSPB -e MYSQL_ROOT_PASSWORD=TDSPB123 -p 3306:3306 -d mysql:latest
+
+# 2. Restaurar pacotes
+
+dotnet restore
+
+# 3. Aplicar as migrations
+
+dotnet ef database update --project src/LojaPerfumes.Infrastructure --startup-project src/LojaPerfumes.Api
+
+# 4. Rodar a API
+
+dotnet run --project src/LojaPerfumes.Api
+
+#Migrations
+
+Uma única migration (`InitialCreate`) com o esquema completo.
